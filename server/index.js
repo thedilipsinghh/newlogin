@@ -16,7 +16,12 @@ const limiter = rateLimit({
 })
 
 app.use(limiter)
-app.use(cors({ origin: "http://localhost:3000", credentials: true })) // middleware
+app.use(cors({
+    origin: process.env.NODE_ENV === "production"
+        ? "https://newlogin-client.vercel.app"
+        : "http://localhost:3000",
+    credentials: true
+})) // middleware
 app.use(express.json()) // for req.body data
 app.use(cookieParser())  // for req.cookie data 
 
